@@ -6,7 +6,6 @@ from scipy.special import comb
 import pandas as pd
 
 st.set_page_config(layout="wide")
-
 st.title("Hypergeometrische Verteilung und Approximationen")
 
 # Gemeinsame Sidebar-Parameter mit eindeutigen keys
@@ -15,11 +14,9 @@ with st.sidebar:
     N = st.number_input("N (Größe der Grundgesamtheit)", min_value=1, max_value=10000, value=50, key="N")
     M = st.number_input("M (Anzahl der Erfolgselemente)", min_value=0, max_value=int(N), value=min(20, int(N)), key="M")
     n = st.number_input("n (Stichprobenumfang)", min_value=0, max_value=int(N), value=min(15, int(N)), key="n")
-    # k liegt sinnvollerweise im Bereich [max(0, n+M-N), min(M,n)], für die einzelnen Tabs angepasst
     k_default = max(0, min(M, n))
     k = st.number_input("k (Anzahl beobachteter Erfolge)", min_value=0, max_value=max(M,n), value=k_default, key="k")
     show_cc_area = st.checkbox("Stetigkeitskorrektur-Fläche im Diagramm zeigen", value=True, key="show_cc")
-
 
 tab1, tab2, tab3, tab4, tab5 = st.tabs([
     "1. Wahrscheinlichkeitsfunktion",
@@ -36,7 +33,7 @@ with tab1:
     k_max = min(M, n)
     if k < k_min: k = k_min
     if k > k_max: k = k_max
-    
+
     bin1 = comb(M, k, exact=True)
     bin2 = comb(N - M, n - k, exact=True)
     bin3 = comb(N, n, exact=True)
@@ -51,10 +48,10 @@ with tab1:
         P(X = k) = \frac{\dbinom{M}{k} \cdot \dbinom{N-M}{n-k}}{\dbinom{N}{n}}
         $$
 
-        - $N$ = Gesamtzahl der Elemente (Population)  
-        - $M$ = Zahl der Erfolge in der Population  
-        - $n$ = Stichprobengröße  
-        - $k$ = Zahl der Erfolge in der Stichprobe  
+        - $N$ = Gesamtzahl der Elemente (Population)   
+        - $M$ = Zahl der Erfolge in der Population   
+        - $n$ = Stichprobengröße   
+        - $k$ = Zahl der Erfolge in der Stichprobe   
         """
     )
 
@@ -110,7 +107,7 @@ with tab2:
     fig2, ax2 = plt.subplots()
     ax2.plot(k_values, cdf_values, marker='o', linestyle='-', color='darkgreen')
     ax2.set_xlabel("k")
-    ax2.set_ylabel("P(X \leq k)")
+    ax2.set_ylabel("P(X \\leq k)")
     ax2.set_title(f"Kumulative Verteilungsfunktion für k=0..{k}")
     st.pyplot(fig2)
 
@@ -203,15 +200,15 @@ with tab4:
             während die Normalverteilung stetig ist.
 
             #### Berechnungen für k = {k} mit Stetigkeitskorrektur:
-            - **P(X = {k}) ≈ Φ({k}+0.5) - Φ({k}-0.5)**  
-              = Φ({k}+0.5) = {phi_plus:.5f}  
-              − Φ({k}-0.5) = {phi_minus:.5f}  
+            - **P(X = {k}) ≈ Φ({k}+0.5) - Φ({k}-0.5)**   
+              = Φ({k}+0.5) = {phi_plus:.5f}   
+              − Φ({k}-0.5) = {phi_minus:.5f}   
               ⇒ **P(X = {k}) ≈ {prob_eq:.5f}**
 
-            - **P(X ≤ {k}) ≈ Φ({k}+0.5)**  
+            - **P(X ≤ {k}) ≈ Φ({k}+0.5)**   
               ⇒ **P(X ≤ {k}) ≈ {prob_le:.5f}**
 
-            - **P(X ≥ {k}) ≈ 1 − Φ({k}-0.5)**  
+            - **P(X ≥ {k}) ≈ 1 − Φ({k}-0.5)**   
               ⇒ **P(X ≥ {k}) ≈ {prob_ge:.5f}**
 
             *Φ ist die Verteilungsfunktion der Standardnormalverteilung.*
@@ -282,7 +279,8 @@ with tab4:
         ax_pmf.set_xlabel("k (Erfolge in Stichprobe)")
         ax_pmf.set_ylabel("P(X = k)")
         ax_pmf.set_title("Dichtefunktion: Hypergeometrisch & Normalapproximation")
-        ax_pmf.legend()
+        # HIER: Legende NICHT anzeigen!
+        # ax_pmf.legend()  <-- Entfernt!
         st.pyplot(fig_pmf)
 
     with col_pmf_legende:
