@@ -48,8 +48,8 @@ with tab1:
         P(X = k) = \frac{\dbinom{M}{k} \cdot \dbinom{N-M}{n-k}}{\dbinom{N}{n}}
         $$
 
-        - $N$ = Gesamtzahl der Elemente (Population)   
-        - $M$ = Zahl der Erfolge in der Population   
+        - $N$ = Größe der Grundgesamtheit   
+        - $M$ = Anzahl der Erfolgselemente   
         - $n$ = Stichprobengröße   
         - $k$ = Zahl der Erfolge in der Stichprobe   
         """
